@@ -1,17 +1,20 @@
-.head{
+.head {
     margin: 5px 0;
 }
 
-.main-container{
-    width: 50%;
+.main-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
 
-.input-form{
+.input-form {
+    width: 50%;
     padding: 20px;
     border: 10px solid rgb(202, 202, 202);
 }
 
-.input-box{
+.input-box {
     width: 100%;
     margin-top: 2px;
     margin-bottom: 5px;
