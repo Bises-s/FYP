@@ -1,25 +1,6 @@
-.nav-title {
-    color: rgb(71, 71, 255);
-    padding: 100px 0px;
-}
-
-.nav-title:hover {
-    color: rgb(71, 71, 255);
-    text-decoration: none;
-}
-
-.nav-full {
-    display: flex;
-    justify-content: space-between;
-}
-
-.navbar-nav>li>a>h4 {
-    color: black;
-}
-
-.navbar-nav>li>a>h4:hover{
-    text-decoration: none;
-    color: rgb(71, 71, 255);
+body {
+    font-family: 'Source Code Pro', monospace;
+    font-weight: bold;
 }
 
 .home-body {
@@ -50,6 +31,7 @@
 }
 
 .home-buttons>button {
-    padding: 10px 55px;
+    padding: 5px 45px;
     border-radius: 32px;
+    font-size: 20px;
 }
