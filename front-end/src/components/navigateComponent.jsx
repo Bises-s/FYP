@@ -14,7 +14,7 @@ const NavigateComponent = () => {
                         <li><a href="about-us"><h4>About</h4></a></li>
                         <li><a href="#"><h4>Vote Party</h4></a></li>
                         <li><a href="#"><h4>Vote Candidate</h4></a></li>
-                        <li><a href="#"><h4>Contact</h4></a></li>
+                        <li><a href="contact-us"><h4>Contact</h4></a></li>
                         <li><a href="#"><h4>Log Out</h4></a></li>
                     </ul>
                 </div>
