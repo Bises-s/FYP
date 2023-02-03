@@ -21,6 +21,7 @@ const ContactusComponent = () => {
                         label="Name"
                         fullWidth
                         className="contact-text-field"
+                        InputProps={{ style: { fontSize: 16 } }}
                     />
                     <TextField
                         label="Email"
