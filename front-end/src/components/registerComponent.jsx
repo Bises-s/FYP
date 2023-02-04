@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useNavigate, useParams, Link } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import "./registerComponent.css"
 import axios from 'axios'
 
@@ -9,39 +9,96 @@ const RegisterComponent = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [cpassword, setCpassword] = useState('');
-    const [province, setProvince] = useState('');
+    const [province, setProvince] = useState('one');
     const [contact, setContact] = useState('');
     const [citizennum, setCitizennum] = useState('');
-    const [gender, setGender] = useState('');
+    const [gender, setGender] = useState('male');
 
-    const navigate = useNavigate();
+    const [errorFname, setErrorFname] = useState(false);
+    const [errorLname, setErrorLname] = useState(false);
+    const [errorEmail, setErrorEmail] = useState(false);
+    const [errorPassword, setErrorPassword] = useState(false);
+    const [errorCpassword, setErrorCpassword] = useState(false);
+    const [errorContact, setErrorContact] = useState(false);
+    const [errorCitizennum, setErrorCitizennum] = useState(false);
 
-    const handleSubmit = (e) => {
-        // e.preventDefault();
-        // if (!fname || !lname || !email || !password || !cpassword || !province || !contact || !citizennum || !gender) {
-        //     console.log("Please provide value into each field");
-        // } else {
-        //     axios.post("http://localhost:5000/api/register", {
-        //         fname,
-        //         lname,
-        //         email,
-        //         password,
-        //         cpassword,
-        //         province,
-        //         contact,
-        //         citizennum,
-        //         gender
-        //     }).then(() => {
-        //         // setState({fname: "",lname: "", email: "",password:"",cpassword:"", province:"", contact:"",citizennum:"",gender:""})
-        //     }).catch((err) => (err.response.data));
-        //     setTimeout(() => navigate("/"), 500)
-        // }
+    const handleSubmit = async () => {
+
+        if (!fname || fname[0] === " ") {
+            setErrorFname(true)
+        } else {
+            setErrorFname(false)
+        }
+
+        if (!lname || lname[0] === " ") {
+            setErrorLname(true)
+        } else {
+            setErrorLname(false)
+        }
+
+        if (!email || email[0] === " ") {
+            setErrorEmail(true)
+        } else {
+            setErrorEmail(false)
+        }
+
+        if (!password || password[0] === " ") {
+            setErrorPassword(true)
+        } else {
+            setErrorPassword(false)
+        }
+
+        if (cpassword !== password) {
+            setErrorCpassword(true)
+        } else {
+            setErrorCpassword(false)
+        }
+
+        if (!contact || contact[0] === " ") {
+            setErrorContact(true)
+        } else {
+            setErrorContact(false)
+        }
+
+        if (!citizennum || citizennum[0] === " ") {
+            setErrorCitizennum(true)
+        } else {
+            setErrorCitizennum(false)
+        }
+
+        if (!fname || fname[0] === " " ||
+            !lname || lname[0] === " " ||
+            !email || email[0] === " " ||
+            !password || password[0] === " " ||
+            password !== cpassword ||
+            !contact || contact[0] === " " ||
+            !citizennum || citizennum[0] === " "
+        ) {
+            console.log(province, gender)
+            alert("Please fill all the field properly")
+        }
+        else {
+            await axios.post("/auth/register", {
+                fname,
+                lname,
+                email,
+                password,
+                province,
+                contact,
+                citizennum,
+                gender
+            }).then((data) => {
+                console.log(data);
+            }).catch((err) => {
+                console.log(err.response.data)
+            });
+        }
     }
+
     return (
         <>
             <div className="d-flex justify-content-center align-items-center head">
                 <div className="main-container">
-                    {/* <form  onSubmit = {handleSubmit}>  */}
                     <h3 className="text-center text-success">Register</h3>
 
                     <div className="input-form rounded">
@@ -51,8 +108,13 @@ const RegisterComponent = () => {
                                 placeholder="Please enter your first name"
                                 className="input-box rounded"
                                 value={fname}
-                                onChange={() => setFname(fname)}
+                                onChange={(e) => setFname(e.target.value)}
                             />
+                            {
+                                errorFname === true && (
+                                    <div className="register-error-message">Cannot leave the field empty</div>
+                                )
+                            }
                         </div>
                         <div>
                             <div>Last Name</div>
@@ -60,8 +122,13 @@ const RegisterComponent = () => {
                                 placeholder="Please enter your last name"
                                 className="input-box rounded"
                                 value={lname}
-                                onChange={() => setLname(lname)}
+                                onChange={(e) => setLname(e.target.value)}
                             />
+                            {
+                                errorLname === true && (
+                                    <div className="register-error-message">Cannot leave the field empty</div>
+                                )
+                            }
                         </div>
                         <div>
                             <div>Email</div>
@@ -69,8 +136,13 @@ const RegisterComponent = () => {
                                 placeholder="Please enter your email address"
                                 className="input-box rounded"
                                 value={email}
-                                onChange={() => setEmail(email)}
+                                onChange={(e) => setEmail(e.target.value)}
                             />
+                            {
+                                errorEmail === true && (
+                                    <div className="register-error-message">Cannot leave the field empty</div>
+                                )
+                            }
                         </div>
                         <div>
                             <div>Password</div>
@@ -78,8 +150,13 @@ const RegisterComponent = () => {
                                 placeholder="Please enter your password"
                                 className="input-box rounded"
                                 value={password}
-                                onChange={() => setPassword(password)}
+                                onChange={(e) => setPassword(e.target.value)}
                             />
+                            {
+                                errorPassword === true && (
+                                    <div className="register-error-message">Cannot leave the field empty</div>
+                                )
+                            }
                         </div>
                         <div>
                             <div>Confirm Password</div>
@@ -87,8 +164,13 @@ const RegisterComponent = () => {
                                 placeholder="Please enter your password"
                                 className="input-box rounded"
                                 value={cpassword}
-                                onChange={() => setCpassword(cpassword)}
+                                onChange={(e) => setCpassword(e.target.value)}
                             />
+                            {
+                                errorCpassword === true && (
+                                    <div className="register-error-message">Password and Confirm password doesnot match</div>
+                                )
+                            }
                         </div>
                         <div>
                             <div>Province
@@ -98,8 +180,7 @@ const RegisterComponent = () => {
                                         name="province"
                                         id="province"
                                         value={province}
-                                        onChange={() => setProvince(province)}
-
+                                        onChange={(e) => setProvince(e.target.value)}
                                         style={{ margin: "5px 15px" }}
                                     >
                                         <option value="one">Province No. 1</option>
@@ -119,8 +200,13 @@ const RegisterComponent = () => {
                                 placeholder="Please enter your phone number"
                                 className="input-box rounded"
                                 value={contact}
-                                onChange={() => setContact(contact)}
+                                onChange={(e) => setContact(e.target.value)}
                             />
+                            {
+                                errorContact === true && (
+                                    <div className="register-error-message">Cannot leave the field empty</div>
+                                )
+                            }
                         </div>
                         <div>
                             <div>Citizenship Number</div>
@@ -128,8 +214,13 @@ const RegisterComponent = () => {
                                 placeholder="Please enter your citizenship number"
                                 className="input-box rounded"
                                 value={citizennum}
-                                onChange={() => setCitizennum(citizennum)}
+                                onChange={(e) => setCitizennum(e.target.value)}
                             />
+                            {
+                                errorCitizennum === true && (
+                                    <div className="register-error-message">Cannot leave the field empty</div>
+                                )
+                            }
                         </div>
                         <div>
                             <div>Gender
@@ -139,7 +230,7 @@ const RegisterComponent = () => {
                                         name="gender"
                                         id="gender"
                                         value={gender}
-                                        onChange={() => setGender(gender)}
+                                        onChange={(e) => setGender(e.target.value)}
                                         style={{ margin: "5px 15px" }}
                                     >
                                         <option value="male">Male</option>
@@ -148,15 +239,9 @@ const RegisterComponent = () => {
                                 </span>
                             </div>
                         </div>
-                        <div>
-                            {/* <div>Profile Image</div>
-                            <div class="input-group mb-3">
-                                <input type="file" class="form-control" id="inputGroupFile01" />
-                            </div> */}
-                        </div>
-                        <button type='submit' className="input-box btn btn-success"><input type="submit" onClick={() => handleSubmit} className='register-btn' value="Register" /></button>
+
+                        <button type='submit' className="btn btn-success register-submit-button" onClick={handleSubmit}>Register</button>
                     </div>
-                    {/* </form>  */}
                 </div>
             </div>
         </>
